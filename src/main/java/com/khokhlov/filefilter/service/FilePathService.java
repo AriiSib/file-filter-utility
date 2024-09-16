@@ -62,7 +62,14 @@ public class FilePathService {
     }
 
     public boolean checkFileExistence(String fileName) {
-        Path filePath = Paths.get(fileName);
+        Path filePath;
+        try {
+            filePath = Paths.get(fileName);
+        } catch (Exception e) {
+            System.err.println("Warning! File not found: " + fileName);
+            return false;
+        }
+
         if (Files.exists(filePath)) {
             if (Files.isReadable(filePath)) {
                 return true;

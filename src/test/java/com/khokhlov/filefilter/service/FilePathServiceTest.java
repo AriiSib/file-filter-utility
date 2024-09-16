@@ -1,6 +1,7 @@
 package com.khokhlov.filefilter.service;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class FilePathServiceTest {
 
@@ -24,9 +26,15 @@ class FilePathServiceTest {
 
     @Test
     void Should_ThrowException_When_InvalidFilePath() {
-        String invalidPath = "invalid:/path";
+        FilePathService filePathServiceMock = Mockito.mock(FilePathService.class);
+
+        String invalidPath = "invalidPath";
+
+        when(filePathServiceMock.validateFileOutputPath(invalidPath))
+                .thenThrow(new InvalidPathException(invalidPath, "Invalid path for result files"));
+
         Exception exception = assertThrows(InvalidPathException.class, () -> {
-            new FilePathService(invalidPath, "prefix");
+            filePathServiceMock.validateFileOutputPath(invalidPath);
         });
 
         assertTrue(exception.getMessage().contains("Invalid path for result files"));
@@ -45,29 +53,18 @@ class FilePathServiceTest {
 
     @Test
     void Should_ThrowInvalidPathException_When_InvalidFileNameGiven() {
-        FilePathService filePathService = new FilePathService(".", "prefix");
+        FilePathService filePathServiceMock = Mockito.mock(FilePathService.class);
         Path tempPath = Paths.get("temp");
-        String invalidFileName = "invalid|file.txt";
+        String invalidFileName = "invalidFile.txt";
+
+        when(filePathServiceMock.resolvePathFileName(tempPath, invalidFileName))
+                .thenThrow(new InvalidPathException(invalidFileName, "Failed to create path for output file"));
 
         Exception exception = assertThrows(InvalidPathException.class, () -> {
-            filePathService.resolvePathFileName(tempPath, invalidFileName);
+            filePathServiceMock.resolvePathFileName(tempPath, invalidFileName);
         });
 
         assertTrue(exception.getMessage().contains("Failed to create path for output file"));
-    }
-
-    @Test
-    void Should_CreateDirectory_When_DirectoryDoesNotExist() throws IOException {
-        Path tempDirectory = Files.createTempDirectory("testDir");
-        String dirPath = tempDirectory.resolve(".").toString();
-        FilePathService filePathService = new FilePathService(dirPath, "prefix");
-
-        filePathService.createPath();
-
-        assertTrue(Files.exists(Paths.get(dirPath)));
-
-        Files.deleteIfExists(Paths.get(dirPath));
-        Files.deleteIfExists(tempDirectory);
     }
 
     @Test

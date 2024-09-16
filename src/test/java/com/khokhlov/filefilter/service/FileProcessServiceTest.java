@@ -5,6 +5,7 @@ import com.khokhlov.filefilter.model.FilteredData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,11 +29,11 @@ class FileProcessServiceTest {
         dataFilterService = mock(DataFilterService.class);
 
         fileProcessService = new FileProcessService(filePathService, fileReaderService, fileWriterService,
-                                                                                statisticsService, dataFilterService);
+                statisticsService, dataFilterService);
     }
 
     @Test
-    void Should_NotProcess_When_FileDoesNotExist() {
+    void Should_NotProcess_When_FileDoesNotExist() throws IOException {
         String fileName = "nonexistent.txt";
 
         when(filePathService.checkFileExistence(fileName)).thenReturn(false);
@@ -45,7 +46,7 @@ class FileProcessServiceTest {
     }
 
     @Test
-    void Should_LogError_When_FileIsEmpty() {
+    void Should_LogError_When_FileIsEmpty() throws IOException {
         String fileName = "empty.txt";
 
         when(filePathService.checkFileExistence(fileName)).thenReturn(true);
@@ -58,7 +59,7 @@ class FileProcessServiceTest {
     }
 
     @Test
-    void Should_ProcessFileCorrectly_When_FileHasData() {
+    void Should_ProcessFileCorrectly_When_FileHasData() throws IOException {
         String fileName = "data.txt";
         List<String> fileData = List.of("123", "45.67", "test string");
 

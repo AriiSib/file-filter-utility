@@ -3,6 +3,7 @@ package com.khokhlov.filefilter.service;
 import com.khokhlov.filefilter.model.DataType;
 import com.khokhlov.filefilter.model.FilteredData;
 
+import java.io.IOException;
 import java.util.List;
 
 public class FileProcessService {
@@ -44,8 +45,13 @@ public class FileProcessService {
 
         FilteredData data = dataFilterService.filterData(lines);
 
+        try {
+            writeDataToFile(data);
+        } catch (IOException e) {
+            return;
+        }
+
         updateStatistics(data);
-        writeDataToFile(data);
     }
 
     private void updateStatistics(FilteredData data) {
@@ -54,7 +60,7 @@ public class FileProcessService {
         }
     }
 
-    private void writeDataToFile(FilteredData data) {
+    private void writeDataToFile(FilteredData data) throws IOException {
         if (!data.getIntegers().isEmpty()) {
             fileWriterService.writeData(DataType.INTEGER, data.getIntegers());
         }

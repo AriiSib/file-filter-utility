@@ -27,7 +27,7 @@ public class FileWriterService {
         }
     }
 
-    public <T> void writeData(DataType type, List<T> data) {
+    public <T> void writeData(DataType type, List<T> data) throws IOException {
         try {
             outputPath = (outputPath == null ? filePathService.createPath() : outputPath);
 
@@ -44,6 +44,7 @@ public class FileWriterService {
             }
         } catch (IOException e) {
             System.err.println("Error writing data to a file: " + getFileName(type) + " " + e.getMessage());
+            throw new IOException();
         }
         isFirstWriteMap.put(type, false);
     }
