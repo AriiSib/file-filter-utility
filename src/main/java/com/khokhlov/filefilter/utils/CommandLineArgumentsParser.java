@@ -27,7 +27,7 @@ public class CommandLineArgumentsParser {
         try {
             cmd = parser.parse(options, getRecognizedArguments(args, options));
         } catch (ParseException e) {
-            throw new ParseException("When parsing the command line - " + e.getMessage());
+            throw new ParseException(e.getMessage());
         }
 
         this.appendMode = cmd.hasOption("a");

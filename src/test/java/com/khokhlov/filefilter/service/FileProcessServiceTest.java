@@ -2,6 +2,7 @@ package com.khokhlov.filefilter.service;
 
 import com.khokhlov.filefilter.model.DataType;
 import com.khokhlov.filefilter.model.FilteredData;
+import com.khokhlov.filefilter.service.statistics.StatisticsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -78,7 +79,7 @@ class FileProcessServiceTest {
 
     @Test
     void Should_UpdateStatistics_When_StatisticsEnabled() {
-        when(statisticsService.isFullStats()).thenReturn(true);
+        when(statisticsService.isFullStatistics()).thenReturn(true);
         FileProcessService fileProcessService1 = new FileProcessService(filePathService, fileReaderService,
                 fileWriterService, statisticsService, dataFilterService);
         String fileName = "data.txt";
@@ -106,8 +107,8 @@ class FileProcessServiceTest {
         FilteredData filteredData = new FilteredData(List.of(123L), List.of(45.67d), List.of("test string"));
         when(dataFilterService.filterData(fileData)).thenReturn(filteredData);
 
-        when(statisticsService.isShortStats()).thenReturn(false);
-        when(statisticsService.isFullStats()).thenReturn(false);
+        when(statisticsService.isShortStatistics()).thenReturn(false);
+        when(statisticsService.isFullStatistics()).thenReturn(false);
 
         fileProcessService.processFile(fileName);
 

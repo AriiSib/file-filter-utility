@@ -2,6 +2,7 @@ package com.khokhlov.filefilter.service;
 
 import com.khokhlov.filefilter.model.DataType;
 import com.khokhlov.filefilter.model.FilteredData;
+import com.khokhlov.filefilter.service.statistics.StatisticsService;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,8 +14,8 @@ public class FileProcessService {
     private final StatisticsService statisticsService;
     private final DataFilterService dataFilterService;
 
-    private final boolean shortStats;
-    private final boolean fullStats;
+    private final boolean shortStatistics;
+    private final boolean fullStatistics;
 
     public FileProcessService(FilePathService filePathService,
                               FileReaderService fileReaderService,
@@ -27,8 +28,8 @@ public class FileProcessService {
         this.fileWriterService = fileWriterService;
         this.dataFilterService = dataFilterService;
         this.statisticsService = statisticsService;
-        this.shortStats = statisticsService.isShortStats();
-        this.fullStats = statisticsService.isFullStats();
+        this.shortStatistics = statisticsService.isShortStatistics();
+        this.fullStatistics = statisticsService.isFullStatistics();
     }
 
     public void processFile(String fileName) {
@@ -55,7 +56,7 @@ public class FileProcessService {
     }
 
     private void updateStatistics(FilteredData data) {
-        if (shortStats || fullStats) {
+        if (shortStatistics || fullStatistics) {
             statisticsService.updateStatistics(data.getIntegers(), data.getFloats(), data.getStrings());
         }
     }

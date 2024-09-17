@@ -8,14 +8,14 @@ public class FileFilterApplication {
 
     public static void main(String[] args) {
         try {
-            AppContextInitializer appContext = new AppContextInitializer();
-            FileProcessService fileProcessService = appContext.initialize(args);
+            AppContextInitializer applicationContext = new AppContextInitializer();
+            FileProcessService fileProcessService = applicationContext.initialize(args);
 
-            for (String fileName : appContext.getInputFiles()) {
+            for (String fileName : applicationContext.getInputFiles()) {
                 fileProcessService.processFile(fileName);
             }
 
-            appContext.getStatisticsService().printStatistics();
+            applicationContext.getStatisticsPrinter().printStatistics();
         } catch (Exception e) {
             System.err.println("Critical error! " + e.getMessage());
             CommandLineArgumentsParser.printHelp();

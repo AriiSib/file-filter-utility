@@ -8,9 +8,9 @@ public class IntegerStatistics {
     private long min = Long.MAX_VALUE;
     private long max = Long.MIN_VALUE;
 
-    public void update(List<Long> integers, boolean fullStats) {
+    public void update(List<Long> integers, boolean fullStatistics) {
         count += integers.size();
-        if (fullStats) {
+        if (fullStatistics) {
             for (long value : integers) {
                 sum += value;
                 min = Math.min(min, value);

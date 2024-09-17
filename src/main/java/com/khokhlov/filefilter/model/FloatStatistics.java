@@ -8,9 +8,9 @@ public class FloatStatistics {
     private double min = Double.MAX_VALUE;
     private double max = Double.MIN_VALUE;
 
-    public void update(List<Double> floats, boolean fullStats) {
+    public void update(List<Double> floats, boolean fullStatistics) {
         count += floats.size();
-        if (fullStats) {
+        if (fullStatistics) {
             for (double value : floats) {
                 sum += value;
                 min = Math.min(min, value);

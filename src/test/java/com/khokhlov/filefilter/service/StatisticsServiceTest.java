@@ -3,6 +3,7 @@ package com.khokhlov.filefilter.service;
 import com.khokhlov.filefilter.model.FloatStatistics;
 import com.khokhlov.filefilter.model.IntegerStatistics;
 import com.khokhlov.filefilter.model.StringStatistics;
+import com.khokhlov.filefilter.service.statistics.StatisticsService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

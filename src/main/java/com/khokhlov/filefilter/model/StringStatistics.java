@@ -7,9 +7,9 @@ public class StringStatistics {
     private int shortestLength = Integer.MAX_VALUE;
     private int longestLength = 0;
 
-    public void update(List<String> strings, boolean fullStats) {
+    public void update(List<String> strings, boolean fullStatistics) {
         count += strings.size();
-        if (fullStats) {
+        if (fullStatistics) {
             for (String str : strings) {
                 int length = str.length();
                 shortestLength = Math.min(shortestLength, length);
