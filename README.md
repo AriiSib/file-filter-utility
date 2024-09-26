@@ -87,7 +87,7 @@ You can run the application by passing the necessary parameters via the command 
    displaying full statistics, appending results to existing files, assigning the prefix "sample-" to each output file,
    and saving the results to a specified path:
     ```bash
-   java -jar util.jar -f -a -p sample- -o /some/path in1.txt <.../some/path/in2.txt>
+   java -jar util.jar -f -a -p sample- -o <.../some/path> <.../some/path/in2.txt> in1.txt
     ```
 
 ## Testing
